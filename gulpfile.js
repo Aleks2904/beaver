@@ -9,13 +9,12 @@ var gulp         = require('gulp'), // Подключаем Gulp
     cache        = require('gulp-cache'), // Подключаем библиотеку кеширования
     cheerio      = require('gulp-cheerio'), // удаляет в свг стандартные стили котоыре мешают его стилизовать
     replace      = require('gulp-replace'), // исправление косяков от cheerio
-    svgSprite    = require('gulp-svg-sprite'), //собирает все свг в 1 спрайт ( у него очень большой функционал, почитать api)
-    svgMin       = require('gulp-svgmin'),  //минификация свг
+    // svgSprite    = require('gulp-svg-sprite'), //собирает все свг в 1 спрайт ( у него очень большой функционал, почитать api)
+    // svgMin       = require('gulp-svgmin'),  //минификация свг
     csso         = require('gulp-csso'), //минификация css
     sassInlineSvg = require('gulp-sass-inline-svg'),
-    svgmin        = require('gulp-svgmin'),
+    // svgmin        = require('gulp-svgmin'),
     sourcemap     = require('gulp-sourcemaps'),
-
     browserSync   = require('browser-sync').create();
 
 const jsFiles = [ 
@@ -73,11 +72,11 @@ function img() {
 function svgSp() {
     return gulp.src('app/img/svg/**/*') 
 
-    .pipe(svgMin({
-        js2svg: {
-            pretty: true
-        }
-    }))
+    // .pipe(svgMin({
+    //     js2svg: {
+    //         pretty: true
+    //     }
+    // }))
 
     .pipe(cheerio({
         run: function($) {
@@ -90,20 +89,20 @@ function svgSp() {
 
     .pipe(replace('&gt;', '>'))
     
-    .pipe(svgSprite({
-        mode:{
-            symbol: {
-                sprite: "sprite.svg"
-            }
-        }
-    }))
+    // .pipe(svgSprite({
+    //     mode:{
+    //         symbol: {
+    //             sprite: "sprite.svg"
+    //         }
+    //     }
+    // }))
 
     .pipe(gulp.dest('app/img')) 
 }
 
 gulp.task('svg', function(){
     return gulp.src('app/img/svg/**/*.svg') 
-      .pipe(svgmin()) // Recommend using svg min to optimize svg files first
+    //   .pipe(svgmin()) // Recommend using svg min to optimize svg files first
       .pipe(sassInlineSvg({
         destDir: 'app/scss'
       }));
